@@ -6,11 +6,13 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 
 from PyQt5 import uic
 
+from UI import Ui_MainWindow
 
-class Circles(QMainWindow):
+
+class Circles(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui',self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.btn_clicked)
         self.is_clicked = False
         self.qp = QPainter()
@@ -22,9 +24,9 @@ class Circles(QMainWindow):
 
     def draw(self):
         if self.is_clicked:
-            self.qp.setBrush(QColor(255, 255, 0))
             n = random.randint(2, 5)
             for i in range(n):
+                self.qp.setBrush(QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
                 d = random.randint(1, 300)
                 x = random.randint(1, 300)
                 y = random.randint(1, 300)
