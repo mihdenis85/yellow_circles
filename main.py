@@ -16,6 +16,8 @@ class Circles(QMainWindow, Ui_MainWindow):
         self.pushButton.clicked.connect(self.btn_clicked)
         self.is_clicked = False
         self.qp = QPainter()
+        self.circles = []
+        self.n = 0
 
     def paintEvent(self, event):
         self.qp.begin(self)
@@ -23,17 +25,26 @@ class Circles(QMainWindow, Ui_MainWindow):
         self.qp.end()
 
     def draw(self):
-        if self.is_clicked:
-            n = random.randint(2, 5)
-            for i in range(n):
-                self.qp.setBrush(QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
-                d = random.randint(1, 300)
-                x = random.randint(1, 300)
-                y = random.randint(1, 300)
-                self.qp.drawEllipse(QtCore.QRect(x, y, d, d))
+        for i in range(self.n):
+            self.qp.setBrush(self.circles[i][-1])
+            d = self.circles[i][0]
+            x = self.circles[i][1]
+            y = self.circles[i][2]
+            self.qp.drawEllipse(QtCore.QRect(x, y, d, d))
 
     def btn_clicked(self):
         self.is_clicked = True
+        self.n = random.randint(2, 5)
+        self.circles = []
+        for i in range(self.n):
+            self.d = random.randint(1, 300)
+            self.x = random.randint(1, 300)
+            self.y = random.randint(1, 300)
+            self.circles.append([self.d, self.x, self.y,
+                              QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))])
+        self.d = random.randint(1, 300)
+        self.x = random.randint(1, 300)
+        self.y = random.randint(1, 300)
         self.update()
 
 
